@@ -51,9 +51,9 @@ impl ClientConnection {
                 return;
             }
         };
-        let s = self.server.lock().unwrap();
+        let mut s = self.server.lock().unwrap();
         match req {
-            request::Request::Connect(c) => handle_connect(s, c),
+            request::Request::Connect(c) => handle_connect(&mut s, c),
             request::Request::Move(m) => handle_move(s, m),
             request::Request::Shuffle(sh) => handle_shuffle(s, sh),
             request::Request::State(_) => handle_state(s, ctx),
@@ -61,7 +61,26 @@ impl ClientConnection {
     }
 }
 
-fn handle_connect(_s: MutexGuard<Server>, _req: Connect) {}
+fn handle_connect(s: &mut MutexGuard<Server>, req: Connect) {
+    let players = &mut s.game_state.players;
+    players.push(Player {
+        id: req.game_id,
+        name: req.player_name,
+    });
+    let stacks = &mut s.game_state.stacks;
+    stacks.push(Stack {
+        stack: Some(items::stack::Stack::Table(Table {
+            id: req.game_id,
+            card: vec![],
+        })),
+    });
+    stacks.push(Stack {
+        stack: Some(items::stack::Stack::Hand(Hand {
+            id: req.game_id,
+            card: vec![],
+        })),
+    });
+}
 
 fn handle_move(_s: MutexGuard<Server>, _reqq: Move) {}
 
