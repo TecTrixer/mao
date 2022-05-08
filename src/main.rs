@@ -7,7 +7,7 @@ use actix_web_actors::ws;
 use bytestring::ByteString;
 
 pub mod items {
-    include!(concat!(env!("OUT_DIR"), "/items.rs"));
+    include!("items.rs");
 }
 // import protobuf generated structs
 
