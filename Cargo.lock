@@ -779,6 +779,7 @@ dependencies = [
  "actix",
  "actix-web",
  "actix-web-actors",
+ "bytes",
  "bytestring",
  "env_logger",
  "prost",
