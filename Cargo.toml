@@ -13,3 +13,7 @@ env_logger = "*"
 bytestring = "*"
 serde = {version = "*", features = ["derive"]}
 serde_json = "*"
+prost = "^0.10"
+
+[build-dependencies]
+prost-build = "^0.10"

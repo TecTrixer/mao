@@ -1,0 +1,168 @@
+syntax = "proto3";
+package items;
+
+message GameState {
+    repeated Stack stacks = 1;
+    repeated Player players = 2;
+}
+
+message Game {
+    int32 id = 1;
+    GameState state = 2;
+}
+
+message Request {
+    oneof request {
+        Connect connect = 1;
+	Move move = 2;
+	Shuffle shuffle = 3;
+	State state = 4;
+    }
+}
+
+message Response {
+    oneof response {
+        Connected connected = 1;
+	Move move = 2;
+	Shuffle shuffle = 3;
+	GameState state = 4;
+    }
+}
+
+message State {}
+
+message Connected {
+    int32 id = 1;
+    GameState here = 2;
+}
+
+message Connect {
+    int32 gameId = 1;
+    string playerName = 2;
+}
+
+message Move {
+    int32 cardId = 1;
+    Field destField = 2;
+}
+
+message Shuffle {
+    int32 stackId = 1;
+}
+
+message Player {
+    int32 id = 1;
+    string name = 2;
+}
+
+message Field {
+    oneof location {
+        PlayField playField = 1;
+	DrawField DrawField = 2;
+	HandField handField = 3;
+	TableField tableField = 4;
+    }
+}
+
+message Stack {
+    oneof stack {
+        Play play = 1;
+	Draw draw = 2;
+	Hand hand = 3;
+	Table table = 4;
+    }
+}
+
+message Play {
+    repeated Card card = 1;
+}
+
+message Draw {
+    repeated Card card = 1;
+}
+
+message Hand {
+    int32 id = 1;
+    repeated Card card = 2;
+}
+
+message Table {
+    int32 id = 1;
+    repeated Card card = 2;
+}
+
+message PlayField {}
+message DrawField {}
+
+message HandField {
+    int32 id = 1;
+}
+
+message TableField {
+    int32 id = 1;
+}
+
+message Card {
+    int32 id = 1;
+    Field field = 2;
+    CardType face = 3;
+}
+
+message CardType {
+    enum cards {
+        Joker = 0;
+	HeartTwo = 1;
+	HeartThree = 2;
+	HeartFour = 3;
+	HeartFive = 4;
+	HeartSix = 5;
+	HeartSeven = 6;
+	HeartEight = 7;
+	HeartNine = 8;
+	HeartTen = 9;
+	HeartJack = 10;
+	HeartQueen = 11;
+	HeartKing = 12;
+	HeartAce = 13;
+	DiamondTwo = 14;
+	DiamondThree = 15;
+	DiamondFour = 16;
+	DiamondFive = 17;
+	DiamondSix = 18;
+	DiamondSeven = 19;
+	DiamondEight = 20;
+	DiamondNine = 21;
+	DiamondTen = 22;
+	DiamondJack = 23;
+	DiamondQueen = 24;
+	DiamondKing = 25;
+	DiamondAce = 26;
+	ClubTwo = 27;
+	ClubThree = 28;
+	ClubFour = 29;
+	ClubFive = 30;
+	ClubSix = 31;
+	ClubSeven = 32;
+	ClubEight = 33;
+	ClubNine = 34;
+	ClubTen = 35;
+	ClubJack = 36;
+	ClubQueen = 37;
+	ClubKing = 38;
+	ClubAce = 39;
+	SpadeTwo = 40;
+	SpadeThree = 41;
+	SpadeFour = 42;
+	SpadeFive = 43;
+	SpadeSix = 44;
+	SpadeSeven = 45;
+	SpadeEight = 46;
+	SpadeNine = 47;
+	SpadeTen = 48;
+	SpadeJack = 49;
+	SpadeQueen = 50;
+	SpadeKing = 51;
+	SpadeAce = 52;
+    }
+}
+

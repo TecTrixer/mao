@@ -6,8 +6,10 @@ use actix_web::{web, App, Error, HttpRequest, HttpResponse, HttpServer};
 use actix_web_actors::ws;
 use bytestring::ByteString;
 
-mod data;
-// use data::*;
+pub mod items {
+    include!(concat!(env!("OUT_DIR"), "/items.rs"));
+}
+// import protobuf generated structs
 
 /// Define WsConnection to client, it will get a reference to the shared data
 struct ClientConnection {
